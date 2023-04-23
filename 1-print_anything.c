@@ -7,6 +7,7 @@
  * _printf - a function that prints anything
  * @format: pointer to a string that holds specifier
  * @...: variable arguments passed to function
+ *
  * Return: Always (0)
  */
 int _printf(const char *format, ...)
