@@ -5,33 +5,37 @@
  * @format: the format to print
  * @i: list of arguments to be printed
  * @list: the list of arguments passed
- * Returns: printed characters
+ * Return: printed characters
  */
-
 int _precision(const char *format, int *i, va_list list)
 {
-	int precision;
-	char current_char;
-	va_list list_cpy;
+	int current_char = *i + 1;
+	int precision = -1;
 
-	va_copy(list_cpy, list);/*creat a copy of the list of arguments passed*/
-	va_start(list_cpy, list);/*initializes the list*/
-	precision = 0;/*this initializes the precision value to 0 and stores*/
-	current_char = format[*i];/*then checks the current char in format str*/
-
-	if (current_char != '.')/*if current char is a '.' it then skipps*/
-	{
-		va_end(list_cpy);/*frees list*/
+	if (format[current_char] != '.')
 		return (precision);
-	}
-	(*i)++;/*loops through the digits presented by i*/
-	current_char = format[*i];
-	while (current_char >= '0'&& current_char <= '9')/*loops over digits*/
+
+	precision = 0;
+
+	for (current_char += 1; format[current_char] != '\0'; current_char++)
 	{
-		precision = precision * 10 + current_char - '0';
-		(*i)++;
-		current_char = format[*i];
+		if (is_digit(format[current_char]))
+		{
+			precision *= 10;
+			precision += format[current_char] - '0';
+		}
+		else
+		if (format[current_char] == '*')
+		{
+			current_char++;
+			precision = va_arg(list, int);
+			break;
+		}
+		else
+			break;
 	}
-	va_end(list_cpy);
+
+	*i = current_char - 1;
 	return (precision);
 }
+
