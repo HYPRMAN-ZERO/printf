@@ -29,7 +29,7 @@ int printf_unsigned(va_list args, char buffer[],
 		num /= 10;
 	}
 	i++;
-	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
+	return (printf_write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
 
 /**
@@ -69,7 +69,7 @@ int printf_octal(va_list args, char buffer[],
 		buffer[i--] = '0';
 
 	i++;
-	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
+	return (printf_write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
 
 /**
@@ -85,7 +85,7 @@ int printf_octal(va_list args, char buffer[],
 int printf_hexadecimal(va_list args, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	return (print_hexa(args, "0123456789abcdef", buffer,
+	return (printf_all_hex(args, "0123456789abcdef", buffer,
 		flags, 'x', width, precision, size));
 }
 
@@ -102,7 +102,7 @@ int printf_hexadecimal(va_list args, char buffer[],
 int printf_upper_hex(va_list args, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	return (print_hexa(args, "0123456789ABCDEF", buffer,
+	return (printf_all_hex(args, "0123456789ABCDEF", buffer,
 		flags, 'X', width, precision, size));
 }
 
@@ -143,10 +143,10 @@ int printf_all_hex(va_list args, char arr[], char buffer[],
 
 	if (flags & F_HASH && new_num != 0)
 	{
-		buffer[i--] = flag_ch;
+		buffer[i--] = flag_two;
 		buffer[i--] = '0';
 	}
 	i++;
-	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
+	return (printf_write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
 

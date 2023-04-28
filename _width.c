@@ -9,21 +9,27 @@
  */
 int _width(const char *format, int *i, va_list list)
 {
-	int width;
 	int current_char;
-	va_list list_cpy;
+	int width = 0;
 
-	va_copy(list_cpy, list);
-	va_start(list_cpy, list);
-	current_char = format[*i];
-	width = 0;
-
-	while (current_char == '0')
+	for (current_char = *i + 1; format[current_char] != '\0'; current_char++)
 	{
-		width = width * 10 + current_char - '0';
-		*i = *i + 1
-		current_char = format[*i];
+		if (is_digit(format[current_char]))
+		{
+			width *= 10;
+			width += format[current_char] - '0';
+		}
+		else
+		if (format[current_char] == '*')
+		{
+			current_char++;
+			width = va_arg(list, int);
+			break;
+		}
+		else
+			break;
 	}
-	va_end(list_cpy);
+	*i = current_char - 1;
 	return (width);
 }
+

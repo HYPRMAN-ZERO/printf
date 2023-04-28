@@ -15,7 +15,7 @@ int printf_char(va_list args, char buffer[],
 {
 	char c = va_arg(args, int);
 
-	return (handle_write_char(c, buffer, flags, width, precision, size));
+	return (printf_write_char(c, buffer, flags, width, precision, size));
 }
 
 /**
@@ -131,7 +131,7 @@ int printf_int(va_list args, char buffer[],
 		num /= 10;
 	}
 	i++;
-	return (write_number(is_negative, i, buffer, flags, width, precision, size));
+	return (write_num(is_negative, i, buffer, flags, width, precision, size));
 }
 
 /**
